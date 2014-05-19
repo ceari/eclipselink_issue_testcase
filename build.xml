@@ -1,0 +1,27 @@
+<project name="StaticWeaving" default="dist" basedir=".">
+
+    <property name="classes" location="out/production/LazyRelationshipSerialization"/>
+
+    <copy todir="${classes}">
+        <fileset dir="src">
+            <include name="META-INF/persistence.xml"/>
+        </fileset>
+    </copy>
+
+    <target name="define.task" description="New task definition for EclipseLink static weaving">
+    <taskdef name="weave" classname="org.eclipse.persistence.tools.weaving.jpa.StaticWeaveAntTask"/>
+    </target>
+
+    <target name="weaving" description="perform weaving" depends="define.task">
+    <weave source="${classes}" target="${classes}" loglevel="FINEST">
+        <classpath>
+            <pathelement path="target/dependency/eclipselink-2.5.1.jar"/>
+            <fileset dir="${classes}">
+                <include name="**/*.class"></include>
+            </fileset>
+        </classpath>
+    </weave>
+    </target>
+
+
+</project>

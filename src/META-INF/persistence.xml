@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+        <!-- Turn on auto discovery of entities-->
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test2;DB_CLOSE_DELAY=-1"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+
+            <property name="eclipselink.weaving" value="static"/>
+            <property name="eclipselink.weaving.internal" value="false"/>
+            <!-- Für OneToOne und ManyToOne Beziehungen -->
+            <property name="eclipselink.weaving.lazy" value="true"/>
+            <!-- Aktivierung von "eclipselink.weaving.changetracking" führt zu einem Fehler an einer 'ordered' Beziehung:
+              die neu angelegten und anschließend gelöschten Listen-Einträge werden im shared Cache als Null-Werte gehalten. -->
+            <property name="eclipselink.weaving.changetracking" value="false"/>
+            <property name="eclipselink.weaving.fetchgroups" value="false"/>
+            <property name="eclipselink.weaving.eager" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
